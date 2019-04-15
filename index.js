@@ -1,8 +1,10 @@
 const express = require('express')
 const app = express()
-const chalk = require('chalk')
+const morgan = require('morgan')
 const bodyParser = require('body-parser')
+
 app.use(bodyParser.json())
+app.use(morgan('tiny'))
 
 let persons = [
     {
@@ -24,6 +26,11 @@ let persons = [
         "name": "Lea Kutvonen",
         "number": "040-123456",
         "id": 4
+    },
+    {
+        "name": "Kerttu Löppönen",
+        "number": "050-9998880",
+        "id": 5
     }
 ]
 
@@ -33,17 +40,14 @@ const infoPage = () => {
 }
 
 app.get('/info', (req, res) => {
-    console.log(chalk.blue.bold('GET'), 'info page')
     res.send(infoPage())
 })
 
 app.get('/', (req, res) => {
-    console.log(chalk.blue.bold('GET'), 'root page')
     res.send('<h3>This server is used for Fullstackopen-2019 excersize osa3/puhelinluettelo-backend</h3>')
 })
 
 app.get('/api/persons', (req, res) => {
-    console.log(chalk.blue.bold('GET'), 'all persons')
     res.json(persons)
 })
 
@@ -51,7 +55,6 @@ app.get('/api/persons/:id', (request, response) => {
     const id = Number(request.params.id)
     const person = persons.find(person => person.id === id)
     if (person) {
-        console.log(chalk.blue.bold('GET'), 'person with id', chalk.bold(id), 'with name', chalk.bold(person.name))
         response.json(person)
     } else {
         response.status(404).end()
@@ -63,7 +66,6 @@ app.delete('/api/persons/:id', (request, response) => {
     const person = persons.find(person => person.id === id)
 
     if (person) {
-        console.log(chalk.red.bold('DELETE'), 'person', chalk.bold(person.name), 'with id', chalk.bold(id))
         persons = persons.filter(person => person.id !== id);
         response.status(204).end();   
     } else {
@@ -79,9 +81,17 @@ const generateRandomId = () => {
 app.post('/api/persons', (request, response) => {
     const body = request.body
 
-    if (!body.name || !body.number) {
+    if (!body) {
         return response.status(400).json({
-            error: 'Content missing from person creation request'
+            error: 'Content missing from person creation request. Should include name and number.'
+        })
+    } else if (!body.name) {
+        return response.status(400).json({
+            error: 'Name missing from person creation request.'
+        })
+    } else if (!body.number) {
+        return response.status(400).json({
+            error: 'Number missing from person creation request.'
         })
     }
 
@@ -91,18 +101,12 @@ app.post('/api/persons', (request, response) => {
         id: generateRandomId()
     }
     persons = persons.concat(person)
-
-    console.log(
-        chalk.green.bold('ADD'), 'person', chalk.bold(person.name), 
-        'with number', chalk.bold(person.number),
-        'and with id', chalk.bold(person.id)
-        )
     response.json(person)
 })
 
 const PORT = 3001
 app.listen(PORT, () => {
     console.log()
-    console.log(chalk.bold('Server started'), 'http://localhost:'+PORT)
+    console.log('Server started: http://localhost:'+PORT)
     console.log()
 })
