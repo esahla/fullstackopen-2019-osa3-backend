@@ -4,7 +4,9 @@
   "description": " Node-sovellus joka tarjoaa puhelinnumerotietoja",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "watch": "nodemon index.js",
+    "start": "node index.js"
   },
   "repository": {
     "type": "git",
@@ -18,5 +20,12 @@
   "bugs": {
     "url": "https://github.com/esahla/fullstackopen-2019-osa3-backend/issues"
   },
-  "homepage": "https://github.com/esahla/fullstackopen-2019-osa3-backend#readme"
+  "homepage": "https://github.com/esahla/fullstackopen-2019-osa3-backend#readme",
+  "dependencies": {
+    "chalk": "^2.4.2",
+    "express": "^4.16.4"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.11"
+  }
 }
