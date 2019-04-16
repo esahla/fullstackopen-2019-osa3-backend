@@ -120,7 +120,8 @@ app.post('/api/persons', (request, response) => {
 })
 
 const unknownEndpoint = (request, response) => {
-    response.status(404).send({ error: `<p>Oops. Looks like ${request} was not found on this server.</p>` })
+    console.log(request)
+    response.status(404).send({ error: `Unknown endpoint: ${request.url}.` })
 }
 
 app.use(unknownEndpoint)
