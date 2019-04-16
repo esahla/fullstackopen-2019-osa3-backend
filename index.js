@@ -114,7 +114,13 @@ app.post('/api/persons', (request, response) => {
     response.json(person)
 })
 
-const PORT = 3001
+const unknownEndpoint = (request, response) => {
+    response.status(404).send({ error: `<p>Oops. Looks like ${req} was not found on this server.</p>` })
+}
+
+app.use(unknownEndpoint)
+
+const PORT = process.env.PORT || 3001
 app.listen(PORT, () => {
     console.log()
     console.log('Server started: http://localhost:'+PORT)
