@@ -57,6 +57,11 @@ app.get('/', (req, res) => {
     res.send('<h3>This server is used for Fullstackopen-2019 excersize osa3/puhelinluettelo-backend</h3>')
 })
 
+app.get('/api', (req, res) => {
+    res.send('<p>API for Fullstackopen 2019 Puhelinluettelo. Serves a hard-coded list of persons and phone numbers.</h3>')
+})
+
+
 app.get('/api/persons', (req, res) => {
     res.json(persons)
 })
@@ -115,7 +120,7 @@ app.post('/api/persons', (request, response) => {
 })
 
 const unknownEndpoint = (request, response) => {
-    response.status(404).send({ error: `<p>Oops. Looks like ${req} was not found on this server.</p>` })
+    response.status(404).send({ error: `<p>Oops. Looks like ${request} was not found on this server.</p>` })
 }
 
 app.use(unknownEndpoint)
