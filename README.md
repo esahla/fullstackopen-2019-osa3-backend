@@ -17,3 +17,14 @@ Backend running on Heroku: <br>https://pacific-reef-85523.herokuapp.com/
 ## Puhelinluettelo frontend
 
 Done with [React](https://reactjs.org/).
+
+## Using MongoDB
+
+By default, this exercise uses [MongoDB Atlas](https://www.mongodb.com/cloud/atlas) for creating and managing the MongoDB database being used to store the persons of the puhelinluettelo. 
+
+However, in case MongoDB Atlas cannot be used, you can use a *local MongoDB* instead. Recommended approach is to use MongoDB Docker image to create a MongoDB database: 
+
+* Good instructions can be found from here: https://blog.jeremylikness.com/mongodb-on-windows-in-minutes-with-docker-3e412f076762
+* Some basic commands to see what's happening inside the MongoDB database: https://dzone.com/articles/top-10-most-common-commands-for-beginners
+
+For this assignment, we're creating a database called `puhelinluettelo-app` to store our persons in a collection called `people` (multiple `Person`s).

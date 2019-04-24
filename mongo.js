@@ -5,12 +5,9 @@ if (process.argv.length < 3 || process.argv.length === 4 || process.argv.length 
     console.log('')
     process.exit(1)
 }
-console.log(process.argv, process.argv.length)
-
-const password = process.argv[2]
 
 const url =
-    `mongodb+srv://esahla-mongo-user-1:${password}@cluster0-3py3k.mongodb.net/puhelinluettelo?retryWrites=true`
+    `mongodb+srv://esahla-mongo-user-1:${process.argv[2]}@cluster0-3py3k.mongodb.net/puhelinluettelo?retryWrites=true`
 
 mongoose.connect(url, { useNewUrlParser: true })
 
@@ -26,14 +23,21 @@ const person = new Person({
     number: process.argv[4]
 })
 
-person.save().then(response => {
-    console.log('lisätään', person.name, 'numero', person.number, 'luetteloon');
-    mongoose.connection.close();
-})
+if (process.argv.length === 3) {
+    Person.find({}).then(result => {
+        console.log('puhelinluettelo:')
+        result.forEach(person => {
+            console.log(person.name, person.number)
+        })
+        mongoose.connection.close()
+    })
+}
 
-// Note.find({}).then(result => {
-//   result.forEach(person => {
-//     console.log(person)
-//   })
-//   mongoose.connection.close()
-// })
+if (process.argv.length === 5) {
+    person.save().then(response => {
+        console.log('lisätään', person.name, 'numero', person.number, 'luetteloon');
+        mongoose.connection.close();
+    })
+}
+
+
