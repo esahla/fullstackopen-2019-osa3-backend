@@ -7,7 +7,11 @@ if (process.argv.length < 3 || process.argv.length === 4 || process.argv.length 
 }
 
 const url =
-    `mongodb+srv://esahla-mongo-user-1:${process.argv[2]}@cluster0-3py3k.mongodb.net/puhelinluettelo?retryWrites=true`
+    // For MongoDB Atlas, use (uncomment) this
+    // `mongodb+srv://esahla-mongo-user-1:${process.argv[2]}@cluster0-3py3k.mongodb.net/puhelinluettelo?retryWrites=true`
+    // For local MongoDB, use (uncomment) this:
+    `mongodb://esahla:${process.argv[2]}@localhost:27017/mydatabase?retryWrites=true`
+    
 
 mongoose.connect(url, { useNewUrlParser: true })
 
@@ -15,6 +19,14 @@ const personSchema = new mongoose.Schema({
     name: String,
     number: String
 })
+
+personSchema.set('toJSON', {
+    transform: (document, returnedObject) => {
+      returnedObject.id = returnedObject._id.toString()
+      delete returnedObject._id
+      delete returnedObject.__v
+    }
+  })
 
 const Person = mongoose.model('Person', personSchema)
 

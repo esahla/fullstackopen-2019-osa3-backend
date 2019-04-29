@@ -2,5 +2,6 @@ PUT http://localhost:3001/api/persons/5cc18b03804da85e80fc7909
 Content-Type: application/json
 
 {
-    "number": "121210101"
+    "namper": "101010101",
+    "number": "19999993"
 }

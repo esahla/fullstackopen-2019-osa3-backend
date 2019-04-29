@@ -1,13 +1,15 @@
+require('dotenv').config()
 const express = require('express')
 const morgan = require('morgan')
 const cors = require('cors')
 const bodyParser = require('body-parser')
+const Person = require('./models/person')
 
 morgan.token('post_body', (req, res) => {
-    if(req.method === "POST") {
-        return(JSON.stringify(req.body))
+    if (req.method === "POST") {
+        return (JSON.stringify(req.body))
     } else {
-        return(null)
+        return (null)
     }
 })
 
@@ -17,87 +19,56 @@ app.use(morgan(':method :url :status :res[content-length] - :response-time ms :p
 app.use(cors())
 app.use(express.static('build'))
 
-let persons = [
-    {
-        "name": "Arto Hellas",
-        "number": "040-123456",
-        "id": 1
-    },
-    {
-        "name": "Martti Tienari",
-        "number": "040-123456",
-        "id": 2
-    },
-    {
-        "name": "Arto Järvinen",
-        "number": "040-123456",
-        "id": 3
-    },
-    {
-        "name": "Lea Kutvonen",
-        "number": "040-123456",
-        "id": 4
-    },
-    {
-        "name": "Kerttu Löppönen",
-        "number": "050-9998880",
-        "id": 5
-    }
-]
-
-const infoPage = () => {
-    let nyt = new Date()
-    return (`<p>Puhelinluettelossa on ${persons.length} henkilön tiedot.</p>\n<p>${nyt}</p>`)
-}
-
+// GET info
 app.get('/info', (req, res) => {
-    res.send(infoPage())
+    let nyt = new Date()
+    Person.countDocuments().then(montako => {
+        res.send(`<p>Puhelinluettelossa on ${montako} henkilön tiedot.</p>\n<p>${nyt}</p>`)
+    })
 })
 
+// GET /
 app.get('/', (req, res) => {
     res.send('<h3>This server is used for Fullstackopen-2019 excersize osa3/puhelinluettelo-backend</h3>')
 })
 
+// GET API
 app.get('/api', (req, res) => {
-    res.send('<p>API for Fullstackopen 2019 Puhelinluettelo. Serves a hard-coded list of persons and phone numbers.</h3>')
+    res.send('<p>API for Fullstackopen 2019 Puhelinluettelo. Serves a list of persons and phone numbers, using a MongoDB as database.</h3>')
 })
 
-
+// GET all persons
 app.get('/api/persons', (req, res) => {
-    res.json(persons)
+    Person.find({}).then(persons => {
+        res.json(persons.map(person => person.toJSON()))
+    })
 })
 
-app.get('/api/persons/:id', (request, response) => {
-    const id = Number(request.params.id)
-    const person = persons.find(person => person.id === id)
-    if (person) {
-        response.json(person)
-    } else {
-        response.status(404).end()
-    }
+// GET a person with id
+app.get('/api/persons/:id', (request, response, next) => {
+    Person.findById(request.params.id).then(person => {
+        if (person) {
+            response.json(person.toJSON())
+        } else {
+            response.status(204).end()
+        }
+    }).catch(error => next(error))
 })
 
-app.delete('/api/persons/:id', (request, response) => {
-    const id = Number(request.params.id);
-    const person = persons.find(person => person.id === id)
+// DELETE a person with id
+app.delete('/api/persons/:id', (request, response, next) => {
+    Person.findByIdAndRemove(request.params.id)
+        .then(result => {
+            response.status(204).end()
+        })
+        .catch(error => next(error))
+})
 
-    if (person) {
-        persons = persons.filter(person => person.id !== id);
-        response.status(204).end();   
-    } else {
-        response.status(404).end()
-    }
-});
-
-const generateRandomId = () => {
-    const randId = Math.floor(Math.random() * Math.floor(50000));
-    return randId
-}
-
-app.post('/api/persons', (request, response) => {
+// POST a new person
+app.post('/api/persons', (request, response, next) => {
     const body = request.body
 
-    if (!body) {
+    if (body.name === undefined && body.number === undefined) {
         return response.status(400).json({
             error: 'Content missing from person creation request. Should include name and number.'
         })
@@ -111,13 +82,34 @@ app.post('/api/persons', (request, response) => {
         })
     }
 
-    const person = {
+    const person = new Person({
         name: body.name,
-        number: body.number,
-        id: generateRandomId()
+        number: body.number
+    })
+
+    person.save().then(savedPerson => {
+        response.json(savedPerson.toJSON())
+    }).catch(error => next(error))
+})
+
+// PUT new information for a person with id (given a number in request)
+app.put('/api/persons/:id', (request, response, next) => {
+    const body = request.body
+
+    if (!body.number) {
+        return response.status(400).json({
+            error: 'Number missing from person update request.'
+        })
     }
-    persons = persons.concat(person)
-    response.json(person)
+
+    const person = {
+        number: body.number
+    }
+
+    Person.findByIdAndUpdate(request.params.id, person, { new: true })
+        .then(updatedPerson => {
+            response.json(updatedPerson.toJSON())
+        }).catch(error => next(error))
 })
 
 const unknownEndpoint = (request, response) => {
@@ -126,9 +118,19 @@ const unknownEndpoint = (request, response) => {
 
 app.use(unknownEndpoint)
 
-const PORT = process.env.PORT || 3001
+// Error handling
+const errorHandler = (error, request, response, next) => {
+    if (error.name === 'CastError' && error.kind == 'ObjectId') {
+        return response.status(400).send({ error: 'malformed id' })
+    }
+
+    console.log('unhandled error:', error.name)
+    next(error)
+}
+
+app.use(errorHandler)
+
+const PORT = process.env.PORT
 app.listen(PORT, () => {
-    console.log()
-    console.log('Server started: http://localhost:'+PORT)
-    console.log()
+    console.log('Server started: http://localhost:' + PORT)
 })
