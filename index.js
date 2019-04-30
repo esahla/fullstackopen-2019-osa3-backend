@@ -87,9 +87,13 @@ app.post('/api/persons', (request, response, next) => {
         number: body.number
     })
 
-    person.save().then(savedPerson => {
-        response.json(savedPerson.toJSON())
-    }).catch(error => next(error))
+    person
+        .save()
+        .then(savedPerson => savedPerson.toJSON())
+        .then(savedAndFormattedPerson => {
+            response.status(201).json(savedAndFormattedPerson)
+        })
+    .catch(error => next(error))
 })
 
 // PUT new information for a person with id (given a number in request)
@@ -122,9 +126,10 @@ app.use(unknownEndpoint)
 const errorHandler = (error, request, response, next) => {
     if (error.name === 'CastError' && error.kind == 'ObjectId') {
         return response.status(400).send({ error: 'malformed id' })
+    } else if (error.name === 'ValidationError') {
+        return response.status(400).send({ error: error.message })
     }
-
-    console.log('unhandled error:', error.name)
+    console.log('Unhandled error! ', error.name)
     next(error)
 }
 

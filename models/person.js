@@ -1,9 +1,7 @@
-// const url =
-//     'mongodb+srv://esahla-mongo-user-1:MYUQv7T4hHFbphqY@cluster0-3py3k.mongodb.net/note-app?retryWrites=true'
-//     `mongodb://esahla:admin123!@localhost:27017/mydatabase?retryWrites=true`
-
 const mongoose = require('mongoose')
+var validaattori = require('mongoose-unique-validator');
 mongoose.set('useFindAndModify', false)
+mongoose.set('useCreateIndex', true)
 
 const url = process.env.MONGODB_URI
 
@@ -18,9 +16,11 @@ mongoose.connect(url, { useNewUrlParser: true })
   })
 
 const personSchema = new mongoose.Schema({
-  name: String,
-  number: String
+  name: { type: String, required: true, unique: true },
+  number: { type: String, required: true, unique: false }
 })
+
+personSchema.plugin(validaattori)
 
 personSchema.set('toJSON', {
   transform: (document, returnedObject) => {
