@@ -16,7 +16,9 @@ Backend running on Heroku: <br>https://pacific-reef-85523.herokuapp.com/
 
 ## Puhelinluettelo frontend
 
-Done with [React](https://reactjs.org/).
+Done with [React](https://reactjs.org/) according to the course instructions, the frontend code is maintained in a separate repository (https://github.com/esahla/fullstackopen-2019/), under 'osa3': https://github.com/esahla/fullstackopen-2019/tree/master/osa3. 
+
+The backend-compatible version of the frontend code is based on the puhelinluettelo-exercise from Osa2, with some modifications to fulfill new requirements for the fullstack puhelinluettelo applications from Osa3. 
 
 ## Using MongoDB
 
