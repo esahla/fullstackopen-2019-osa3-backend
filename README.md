@@ -1,8 +1,8 @@
 # Puhelinluettelo-backend
 This is the puhelinluettelo-backend for [Fullstackopen 2019](https://fullstackopen.com/) online course made by me.
 
-## Backend application in Internet
-Backend running on Heroku: <br>https://pacific-reef-85523.herokuapp.com/
+## Application in Internet
+The application is running on Heroku: <br>https://pacific-reef-85523.herokuapp.com/
 
 ## Backend API:
 | Route                  | Description        |
