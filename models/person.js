@@ -16,8 +16,18 @@ mongoose.connect(url, { useNewUrlParser: true })
   })
 
 const personSchema = new mongoose.Schema({
-  name: { type: String, required: true, unique: true },
-  number: { type: String, required: true, unique: false }
+  name: { 
+    type: String,
+    minlength: [3, 'should be at minimum 3 letters long'], 
+    required: true, 
+    unique: true 
+  },
+  number: { 
+    type: String, 
+    minlength: [8, 'should be at minimum 8 digits long'], 
+    required: true, 
+    unique: false 
+  }
 })
 
 personSchema.plugin(validaattori)

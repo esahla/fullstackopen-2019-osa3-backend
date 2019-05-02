@@ -93,7 +93,10 @@ app.post('/api/persons', (request, response, next) => {
         .then(savedAndFormattedPerson => {
             response.status(201).json(savedAndFormattedPerson)
         })
-    .catch(error => next(error))
+        .catch(error => {
+            console.log(error.name)
+            next(error)
+        })
 })
 
 // PUT new information for a person with id (given a number in request)
@@ -128,7 +131,7 @@ const errorHandler = (error, request, response, next) => {
         return response.status(400).send({ error: 'malformed id' })
     } else if (error.name === 'ValidationError') {
         return response.status(400).send({ error: error.message })
-    }
+    } 
     console.log('Unhandled error! ', error.name)
     next(error)
 }
