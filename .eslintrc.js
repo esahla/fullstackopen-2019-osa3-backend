@@ -46,6 +46,9 @@ module.exports = {
             "error", { "before": true, "after": true }
         ],
         "no-console": 0,
-        "arrow-parens": [2, "as-needed"]
+        "arrow-parens": [2, "as-needed"],
+        "consistent-return": 0,
+        "no-param-reassign": 0,
+        "no-underscore-dangle": 0
     }
 }

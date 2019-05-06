@@ -63,27 +63,25 @@ app.delete('/api/persons/:id', (request, response, next) => {
 
 // POST a new person
 app.post('/api/persons', (request, response, next) => {
-  const body = request.body
-
-  if (body.name === undefined && body.number === undefined) {
+  if (request.body.name === undefined && request.body.number === undefined) {
     return response.status(400).json({
       error: 'Content missing from person creation request. Should include name and number.',
     })
   }
-  if (!body.name) {
+  if (!request.body.name) {
     return response.status(400).json({
       error: 'Name missing from person creation request.',
     })
   }
-  if (!body.number) {
+  if (!request.body.number) {
     return response.status(400).json({
       error: 'Number missing from person creation request.',
     })
   }
 
   const person = new Person({
-    name: body.name,
-    number: body.number,
+    name: request.body.name,
+    number: request.body.number,
   })
 
   person
@@ -100,16 +98,14 @@ app.post('/api/persons', (request, response, next) => {
 
 // PUT new information for a person with id (given a number in request)
 app.put('/api/persons/:id', (request, response, next) => {
-  const body = request.body
-
-  if (!body.number) {
+  if (!request.body.number) {
     return response.status(400).json({
       error: 'Number missing from person update request.',
     })
   }
 
   const person = {
-    number: body.number,
+    number: request.body.number,
   }
 
   Person.findByIdAndUpdate(request.params.id, person, { new: true })
@@ -141,7 +137,7 @@ const errorHandler = (error, request, response, next) => {
 
 app.use(errorHandler)
 
-const PORT = process.env.PORT
+const { PORT } = process.env
 app.listen(PORT, () => {
-  console.log('Server started: http://localhost:', PORT)
+  console.log(`Server started: http://localhost:${PORT}`)
 })
