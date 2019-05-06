@@ -20,6 +20,12 @@ Done with [React](https://reactjs.org/) according to the course instructions, th
 
 The backend-compatible version of the frontend code is based on the puhelinluettelo-exercise from Osa2, with some modifications to fulfill new requirements for the fullstack puhelinluettelo applications from Osa3. 
 
+## Linting
+
+The code is analyzed with ESLint. You can run `npm run lint` to see the linting results. The rules used in the linting are same as what were used in the course exercise. 
+
+*Note:* Slightly modified AirBnB linting rules were used in a separate branch that can be found here: https://github.com/esahla/fullstackopen-2019-osa3-backend/tree/Osa3.22-AirBnB-rules
+
 ## Using MongoDB
 
 By default, this exercise uses [MongoDB Atlas](https://www.mongodb.com/cloud/atlas) for creating and managing the MongoDB database being used to store the persons of the puhelinluettelo. 
