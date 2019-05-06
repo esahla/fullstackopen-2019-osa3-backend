@@ -6,6 +6,7 @@ module.exports = {
         'node': true
     },
     'extends': 'eslint:recommended',
+    'extends': 'airbnb',
     'globals': {
         'Atomics': 'readonly',
         'SharedArrayBuffer': 'readonly'
@@ -44,6 +45,7 @@ module.exports = {
         "arrow-spacing": [
             "error", { "before": true, "after": true }
         ],
-        "no-console": 0
+        "no-console": 0,
+        "arrow-parens": [2, "as-needed"]
     }
 }

@@ -5,19 +5,16 @@ if (process.argv.length < 3 || process.argv.length === 4 || process.argv.length 
   console.log('')
   process.exit(1)
 }
-
-const url =
-  // For MongoDB Atlas, use (uncomment) this
-  // `mongodb+srv://esahla-mongo-user-1:${process.argv[2]}@cluster0-3py3k.mongodb.net/puhelinluettelo?retryWrites=true`
-  // For local MongoDB, use (uncomment) this:
-  `mongodb://esahla:${process.argv[2]}@localhost:27017/mydatabase?retryWrites=true`
-
+// For MongoDB Atlas, use (uncomment) this
+// `mongodb+srv://esahla-mongo-user-1:${process.argv[2]}@cluster0-3py3k.mongodb.net/puhelinluettelo?retryWrites=true`
+// For local MongoDB, use (uncomment) this:
+const url = `mongodb://esahla:${process.argv[2]}@localhost:27017/mydatabase?retryWrites=true`
 
 mongoose.connect(url, { useNewUrlParser: true })
 
 const personSchema = new mongoose.Schema({
   name: String,
-  number: String
+  number: String,
 })
 
 personSchema.set('toJSON', {
@@ -32,14 +29,14 @@ const Person = mongoose.model('Person', personSchema)
 
 const person = new Person({
   name: process.argv[3],
-  number: process.argv[4]
+  number: process.argv[4],
 })
 
 if (process.argv.length === 3) {
   Person.find({}).then(result => {
     console.log('puhelinluettelo:')
-    result.forEach(person => {
-      console.log(person.name, person.number)
+    result.forEach(persoona => {
+      console.log(persoona.name, persoona.number)
     })
     mongoose.connection.close()
   })
@@ -51,5 +48,3 @@ if (process.argv.length === 5) {
     mongoose.connection.close()
   })
 }
-
-

@@ -5,12 +5,11 @@ const cors = require('cors')
 const bodyParser = require('body-parser')
 const Person = require('./models/person')
 
-morgan.token('post_body', (req) => {
+morgan.token('post_body', req => {
   if (req.method === 'POST') {
     return (JSON.stringify(req.body))
-  } else {
-    return (null)
   }
+  return (null)
 })
 
 const app = express()
@@ -21,7 +20,7 @@ app.use(express.static('build'))
 
 // GET info
 app.get('/info', (req, res) => {
-  let nyt = new Date()
+  const nyt = new Date()
   Person.countDocuments().then(montako => {
     res.send(`<p>Puhelinluettelossa on ${montako} henkilön tiedot.</p>\n<p>${nyt}</p>`)
   })
@@ -68,21 +67,23 @@ app.post('/api/persons', (request, response, next) => {
 
   if (body.name === undefined && body.number === undefined) {
     return response.status(400).json({
-      error: 'Content missing from person creation request. Should include name and number.'
+      error: 'Content missing from person creation request. Should include name and number.',
     })
-  } else if (!body.name) {
+  }
+  if (!body.name) {
     return response.status(400).json({
-      error: 'Name missing from person creation request.'
+      error: 'Name missing from person creation request.',
     })
-  } else if (!body.number) {
+  }
+  if (!body.number) {
     return response.status(400).json({
-      error: 'Number missing from person creation request.'
+      error: 'Number missing from person creation request.',
     })
   }
 
   const person = new Person({
     name: body.name,
-    number: body.number
+    number: body.number,
   })
 
   person
@@ -103,12 +104,12 @@ app.put('/api/persons/:id', (request, response, next) => {
 
   if (!body.number) {
     return response.status(400).json({
-      error: 'Number missing from person update request.'
+      error: 'Number missing from person update request.',
     })
   }
 
   const person = {
-    number: body.number
+    number: body.number,
   }
 
   Person.findByIdAndUpdate(request.params.id, person, { new: true })
@@ -127,9 +128,11 @@ app.use(unknownEndpoint)
 const errorHandler = (error, request, response, next) => {
   if (error.name === 'CastError' && error.kind === 'ObjectId') {
     return response.status(400).send({ error: 'malformed id' })
-  } else if (error.name === 'ValidationError') {
+  }
+  if (error.name === 'ValidationError') {
     return response.status(400).send({ error: error.message })
-  } else if (error.name === 'TypeError' && error.message.toString().includes('toJSON')) {
+  }
+  if (error.name === 'TypeError' && error.message.toString().includes('toJSON')) {
     return response.status(404).send({ error: 'Käyttäjää ei ole luotu tai se on poistettu' })
   }
   console.log('Unhandled error: ', error.name)
@@ -140,5 +143,5 @@ app.use(errorHandler)
 
 const PORT = process.env.PORT
 app.listen(PORT, () => {
-  console.log('Server started: http://localhost:' + PORT)
+  console.log('Server started: http://localhost:', PORT)
 })
