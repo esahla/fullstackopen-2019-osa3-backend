@@ -1,5 +1,5 @@
 # Puhelinluettelo-backend
-This is the puhelinluettelo-backend for [Fullstackopen 2019](https://fullstackopen.com/) online course made by me.
+This is the puhelinluettelo-backend for [Fullstackopen 2019](https://fullstackopen.com/) online course made by yours truly.
 
 ## Application in Internet
 The application is running on Heroku: <br>https://pacific-reef-85523.herokuapp.com/
@@ -41,10 +41,10 @@ For this assignment, we're creating a database called `puhelinluettelo-app` to s
 
 ### Some lessons learned from the course so far
 
-* Create new react app with 'npx create-react-app'
+* Create new react app with `npx create-react-app`
 * Use npm module dotenv and `.env` file to define environment variables
 * When needed, use heroku to test online deployment. Use MongoDB Atlas when you need MongoDB database.
-* If you use Heroku, use Procfile
+* If you use Heroku, use `Procfile`
 * Create a deploment script to build frontend and deploy it as part of backend.
 * Create necessary / helpful npm scripts to aid in development:
 ```
