@@ -10,9 +10,9 @@ The application is running on Heroku: <br>https://pacific-reef-85523.herokuapp.c
 | [`GET /api`](https://pacific-reef-85523.herokuapp.com/api)             | Returns info-page. |
 | [`GET /api/persons`](https://pacific-reef-85523.herokuapp.com/api/persons)     | Returns all persons and their phone numbers. |
 | [`GET /api/persons/:id`](https://pacific-reef-85523.herokuapp.com/api/persons/3) | Returns person and phone number for particular `id`. |
-| `POST /api/persons/`   | Stores new person when provided with correct content as input in the request body. Expects `name` and `number`. For example: <br>```{ "name": "Test", "number": "010123" }``` |
+| `POST /api/persons/`   | Stores new person when provided with correct content as input in the request body. Expects `name` and `number`. For example: <br>```{ "name": "Test", "number": "01020304" }``` |
 | `DELETE /api/persons/:id` | Deletes person with given `id`. |
-| `PUT /api/persons/:id` | Modifies the information of person with given `id`. (not working at the moment) |
+| `PUT /api/persons/:id` | Modifies the information of person with given `id`. |
 
 ## Puhelinluettelo frontend
 
