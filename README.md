@@ -4,7 +4,7 @@ This is the puhelinluettelo-backend for [Fullstackopen 2019](https://fullstackop
 ## Application in Internet
 The application is running on Heroku: <br>https://pacific-reef-85523.herokuapp.com/
 
-## Backend API:
+## Backend API
 | Route                  | Description        |
 |------------------------|--------------------|
 | [`GET /api`](https://pacific-reef-85523.herokuapp.com/api)             | Returns info-page. |
