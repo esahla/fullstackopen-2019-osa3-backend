@@ -64,6 +64,7 @@ const cors = require('cors') // For enabling CORS
 const bodyParser = require('body-parser') // For parsing the JSON request
 ```
 * Use Mongoose as a library for MongoDB
-* Remember to .gitignore node_modules
+* Remember to .gitignore `node_modules/` and `.env`
+
 
 
