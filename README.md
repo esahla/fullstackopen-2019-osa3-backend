@@ -67,5 +67,4 @@ const mongoose = require('mongoose') // Library for MongoDB, 'npm install mongoo
 * Use Mongoose as a library for MongoDB
 * Remember to .gitignore `node_modules/` and `.env`
 * Use nodemon to keep the app running on the background, taking in updates. (`npm install nodemon --save-dev`, `npm run watch`)
-
-
+* Take frontend build into use in backend app implementation by addin `app.use(express.static('build'))`
