@@ -57,11 +57,12 @@ For this assignment, we're creating a database called `puhelinluettelo-app` to s
 * It's good to .eslintignore the `build` directory
 * Good items to use for backend REST API:
 ```javascript
-require('dotenv').config()  // For env. variables
-const express = require('express') // Express app, npm install express --save
+require('dotenv').config()  // For env. variables, 'npm install dotenv --save'
+const express = require('express') // Express app, 'npm install express --save'
 const morgan = require('morgan') // For HTTP event logging
-const cors = require('cors') // For enabling CORS
+const cors = require('cors') // For enabling CORS, 'npm install cors --save'
 const bodyParser = require('body-parser') // For parsing the JSON request
+const mongoose = require('mongoose') // Library for MongoDB, 'npm install mongoose --save'
 ```
 * Use Mongoose as a library for MongoDB
 * Remember to .gitignore `node_modules/` and `.env`
