@@ -47,7 +47,7 @@ For this assignment, we're creating a database called `puhelinluettelo-app` to s
 * If you use Heroku, use `Procfile`
 * Create a deploment script to build frontend and deploy it as part of backend.
 * Create necessary / helpful npm scripts to aid in development:
-```
+```json
   "scripts": {
     "watch": "nodemon index.js",
     "start": "node index.js",
@@ -56,7 +56,7 @@ For this assignment, we're creating a database called `puhelinluettelo-app` to s
 ```
 * It's good to .eslintignore the `build` directory
 * Good items to use for backend REST API:
-```
+```javascript
 require('dotenv').config()  // For env. variables
 const express = require('express') // Express app
 const morgan = require('morgan') // For HTTP event logging
