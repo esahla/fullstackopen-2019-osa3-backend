@@ -65,6 +65,6 @@ const bodyParser = require('body-parser') // For parsing the JSON request
 ```
 * Use Mongoose as a library for MongoDB
 * Remember to .gitignore `node_modules/` and `.env`
-
+* Use nodemon to keep the app running on the background, taking in updates. (`npm install nodemon --save-dev`, `npm run watch`)
 
 
