@@ -41,7 +41,7 @@ For this assignment, we're creating a database called `puhelinluettelo-app` to s
 
 ### Some lessons learned from the course so far
 
-* Create new react app with `npx create-react-app`
+* Create new react app with `npx create-react-app`, and new backend with `npm init` 
 * Use npm module dotenv and `.env` file to define environment variables
 * When needed, use heroku to test online deployment. Use MongoDB Atlas when you need MongoDB database.
 * If you use Heroku, use `Procfile`
