@@ -58,7 +58,7 @@ For this assignment, we're creating a database called `puhelinluettelo-app` to s
 * Good items to use for backend REST API:
 ```javascript
 require('dotenv').config()  // For env. variables
-const express = require('express') // Express app
+const express = require('express') // Express app, npm install express --save
 const morgan = require('morgan') // For HTTP event logging
 const cors = require('cors') // For enabling CORS
 const bodyParser = require('body-parser') // For parsing the JSON request
