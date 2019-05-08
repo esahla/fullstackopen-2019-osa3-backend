@@ -36,3 +36,34 @@ However, in case MongoDB Atlas cannot be used, you can use a *local MongoDB* ins
 * Some basic commands to see what's happening inside the MongoDB database: https://dzone.com/articles/top-10-most-common-commands-for-beginners
 
 For this assignment, we're creating a database called `puhelinluettelo-app` to store our persons in a collection called `people` (multiple `Person`s).
+
+----
+
+### Some lessons learned from the course so far
+
+* Create new react app with 'npx create-react-app'
+* Use npm module dotenv and `.env` file to define environment variables
+* When needed, use heroku to test online deployment. Use MongoDB Atlas when you need MongoDB database.
+* If you use Heroku, use Procfile
+* Create a deploment script to build frontend and deploy it as part of backend.
+* Create necessary / helpful npm scripts to aid in development:
+```
+  "scripts": {
+    "watch": "nodemon index.js",
+    "start": "node index.js",
+    "lint": "eslint ."
+  },
+```
+* It's good to .eslintignore the `build` directory
+* Good items to use for backend REST API:
+```
+require('dotenv').config()  // For env. variables
+const express = require('express') // Express app
+const morgan = require('morgan') // For HTTP event logging
+const cors = require('cors') // For enabling CORS
+const bodyParser = require('body-parser') // For parsing the JSON request
+```
+* Use Mongoose as a library for MongoDB
+* Remember to .gitignore node_modules
+
+
