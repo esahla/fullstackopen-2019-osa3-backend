@@ -54,6 +54,7 @@ For this assignment, we're creating a database called `puhelinluettelo-app` to s
     "lint": "eslint ."
   },
 ```
+* To lint: `npm install eslint --save-dev`, then `node_modules/.bin/eslint --init`, and finally `npm run lint`
 * It's good to .eslintignore the `build` directory
 * Good items to use for backend REST API:
 ```javascript
